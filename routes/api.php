@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\RoleController;
+use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,12 @@ Route::prefix('v1')->group(function () {
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
     });
+
+    Route::prefix('master')->group(function () {
+        Route::apiResource('user', UserController::class);
+    });
     
-    Route::group(['prefix' => 'settings'], function () {
+    Route::prefix('settings')->group(function () {
         Route::apiResource('role', RoleController::class);
     });
 });

@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Role\StoreRequest;
-use App\Repositories\API\V1\RoleRepository;
+use App\Http\Requests\API\V1\User\StoreRequest;
+use App\Http\Requests\API\V1\User\UpdateRequest;
+use App\Repositories\API\V1\UserRepository;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class UserController extends Controller
 {
-    protected RoleRepository $role;
+    protected UserRepository $user;
 
     public function __construct()
     {
-        $this->role = new RoleRepository();
+        $this->user = new UserRepository();
     }
 
     /**
@@ -21,7 +22,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $this->role->get($request->except('token_decode'));
+        $data = $this->user->get($request->except('token_decode'));
 
         return $this->success($data);
     }
@@ -31,7 +32,7 @@ class RoleController extends Controller
      */
     public function store(StoreRequest $request)
     {;
-        $data = $this->role->store($request->validated());
+        $data = $this->user->store($request->validated());
 
         return $this->success($data, 201);
     }
@@ -41,7 +42,7 @@ class RoleController extends Controller
      */
     public function show(int $id)
     {
-        $data = $this->role->find($id);
+        $data = $this->user->find($id);
 
         return $this->success($data);
     }
@@ -49,9 +50,9 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreRequest $request, int $id)
+    public function update(UpdateRequest $request, int $id)
     {
-        $data = $this->role->update($request->validated(), $id);
+        $data = $this->user->update($request->validated(), $id);
 
         return $this->success($data);
     }
@@ -61,7 +62,7 @@ class RoleController extends Controller
      */
     public function destroy(int $id)
     {
-        $this->role->delete($id);
+        $this->user->delete($id);
 
         return $this->success(null, 204);
     }

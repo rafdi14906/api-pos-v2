@@ -6,6 +6,7 @@ use App\Traits\Response;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\UnauthorizedException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -47,6 +48,10 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (UnauthorizedException $e) {
             return $this->error($e->getMessage() == '' ? 'Unauthorized' : $e->getMessage(), 401, $e->getTraceAsString());
+        });
+
+        $this->renderable(function (ValidationException $e) {
+            return $this->error($e->getMessage() == '' ? 'Validation failed' : $e->getMessage(), 400, $e->getTraceAsString());
         });
 
         $this->renderable(function (Throwable $e) {
