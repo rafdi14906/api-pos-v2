@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\MenuController;
 use App\Http\Controllers\API\V1\RoleController;
 use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Http\Request;
@@ -34,6 +35,10 @@ Route::prefix('v1')->group(function () {
     });
     
     Route::prefix('settings')->group(function () {
+        Route::prefix('menu')->group(function () {
+            Route::get('/', [MenuController::class, 'index']);
+        });
+
         Route::apiResource('role', RoleController::class);
     });
 });

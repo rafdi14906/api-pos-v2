@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ParentSubMenu extends Model
 {
@@ -20,4 +21,12 @@ class ParentSubMenu extends Model
         'updated_by',
         'deleted_by',
     ];
+
+    /**
+     * Get all of the childSubMenus for the menu.
+     */
+    public function childSubMenus(): HasMany
+    {
+        return $this->hasMany(ChildSubMenu::class);
+    }
 }
